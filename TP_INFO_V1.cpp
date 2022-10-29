@@ -4,6 +4,37 @@
 #include <string>
 using namespace std;
 
+//ESTRUCTURA DE PROVINCIAS
+struct cordoba
+{
+	int cba_id;
+	struct city c;
+	struct cordoba *next;
+};
+
+struct santa_fe
+{
+	int stfe_id;
+	struct city s;
+	struct santa_fe *next;
+};
+
+struct mendoza
+{
+	int mendoza_id;
+	struct city m;
+	struct mendoza *next;
+};
+
+//ESTRUCTURA DE PROVINCIAS
+/*struct city
+{
+	struct city *next;
+	struct measurement m;
+	int cityld;
+	string city_name;
+};*/
+
 struct timestamp
 {
 	int day;
@@ -19,32 +50,9 @@ struct measurement
 	struct timestamp time;
 };
 
-struct city
-{
-	struct city *next;
-	struct measurement m;
-	int cityld;
-	string city_name;
-};
 
-struct cordoba
-{
-	int cba_id;
-	struct city c;
-	struct cordoba *next;
-};
 
-struct santa_fe
-{
-	struct city c;
-	struct santa_fe *next;
-};
 
-struct mendoza
-{
-	struct city c;
-	struct mendoza *next;
-};
 
 int main(int argc, char *argv[]) {
 	
