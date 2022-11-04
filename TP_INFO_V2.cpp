@@ -209,6 +209,10 @@ int main(int argc, char *argv[]) {
 			temp_prom(&temp_c,&temp_sf,&temp_m);
 			break;
 		case 3:
+			temp_m=head_m;
+			temp_sf=head_sf;
+			temp_c=head_c;
+			temp_prom_city(&temp_c,&temp_sf,&temp_m);
 			break;
 		case 4:
 			break;
@@ -306,11 +310,33 @@ void temp_prom(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoz
 	}
 	printf("Temperatura promedio de Cordoba: %f\n", ((float)suma/acum)); 
 	printf("--------------------------------------------\n");
-}/*
+}
 void temp_prom_city(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoza** temp_m){
 	int acum= 0, ii= 0;
 	double suma= 0;
-	while((*new_node)->c.cityld== ii){
+	FILE *fp=fopen("./data_set.txt", "r");
+	while((*temp_c)!=NULL){
+		while((*temp_c)->c.cityld == ii){
+			acum++;
+			suma+= (*temp_c)->c.m.temp;
+			(*temp_c)= (*temp_c)->next; 
+		}
+		cout<<"Temperatura prom de "<<(*temp_c)->c.city_name<<" es: "<<((float)suma/acum)<<endl;
+		ii++;
 		
 	}
-}*///HAGANLO XD A MI NO ME SALE
+	/*
+		if((*temp_sf)->c.cityld == ii){
+			acum++;
+			suma+= (*temp_sf)->c.m.temp;
+			cout<<"Temperatura prom de "<<(*temp_sf)->c.city_name<<" es: "<<((float)suma/acum)<<endl;
+		}
+		if((*temp_m)->c.cityld == ii){
+			acum++;
+			suma+= (*temp_m)->c.m.temp;
+			cout<<"Temperatura prom de "<<(*temp_m)->c.city_name<<" es: "<<((float)suma/acum)<<endl;
+		}
+		ii++;
+	}*/
+	
+}//HAGANLO XD A MI NO ME SALE
