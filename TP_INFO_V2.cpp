@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <math.h>
 using namespace std;
 
 struct timestamp
@@ -52,6 +53,10 @@ int menu();
 void cant_muestras(struct cordoba**, struct santa_fe**, struct mendoza**);
 void temp_prom(struct cordoba**, struct santa_fe**, struct mendoza**);
 void temp_prom_city(struct cordoba**, struct santa_fe**, struct mendoza**);
+void ciudad_mas_calida(struct cordoba*,struct santa_fe*,struct mendoza*);
+void ciudad_mas_fria(struct cordoba*,struct santa_fe*,struct mendoza*);
+void dia_mas_frio(struct cordoba*,struct santa_fe*,struct mendoza*);
+void provincia_para_pimientos(struct cordoba*,struct santa_fe*,struct mendoza*);
 int main(int argc, char *argv[]) {
 	
 	struct cordoba* head_c=NULL;
@@ -191,30 +196,35 @@ int main(int argc, char *argv[]) {
 	int opcion=0;
 	do {
 		opcion= menu();
+		temp_m=head_m;
+		temp_sf=head_sf;
+		temp_c=head_c;
 		switch (opcion)
 		{
+			
 		case 0:
 			printf ("Adios ¡Gracias!");
 			break;
 		case 1:
-			temp_m=head_m;
-			temp_sf=head_sf;
-			temp_c=head_c;
 			cant_muestras(&temp_c,&temp_sf,&temp_m);
 			break;
 		case 2:
-			temp_m=head_m;
-			temp_sf=head_sf;
-			temp_c=head_c;
 			temp_prom(&temp_c,&temp_sf,&temp_m);
 			break;
 		case 3:
+			temp_prom_city(&temp_c,&temp_sf,&temp_m);
 			break;
 		case 4:
+			ciudad_mas_calida(temp_c,temp_sf,temp_m);
 			break;
 		case 5:
+			ciudad_mas_fria(temp_c,temp_sf,temp_m);
 			break;
 		case 6:
+			dia_mas_frio(temp_c,temp_sf,temp_m);
+			break;
+		case 8:
+			provincia_para_pimientos(temp_c,temp_sf,temp_m);
 			break;
 		}
 	}while (opcion !=0);
@@ -278,6 +288,7 @@ void temp_prom(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoz
 	
 	int acum= 0;
 	double suma= 0;
+	
 	printf("--------------------------------------------\n");
 	//OPCION 1 DEL MENU (MENDOZA)
 	while(*temp_m!=NULL)
@@ -306,11 +317,272 @@ void temp_prom(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoz
 	}
 	printf("Temperatura promedio de Cordoba: %f\n", ((float)suma/acum)); 
 	printf("--------------------------------------------\n");
-}/*
+}
 void temp_prom_city(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoza** temp_m){
-	int acum= 0, ii= 0;
+	/*int acum= 0, ii= 0,numeroId=0;
 	double suma= 0;
-	while((*new_node)->c.cityld== ii){
-		
+	struct mendoza* temp_back_m=NULL;
+	temp_back_m=*head_m;
+	while(*temp_m!=NULL){
+		//printf("%d",(*temp_m)->c.cityld);
+		numeroId=(*temp_m)->c.cityld;
+		if((*temp_m)->c.cityld==numeroId){
+			//printf("%d",(*temp_m)->c.m.temp);
+			acum++;	
+			suma+= (*temp_c)->c.m.temp;
+			*temp_c=(*temp_c)->next;
+		}
+		else{
+			
+		}
+		*temp_m=(*temp_m)->next;
+	HAY QUE HACERLO CON COMPARE STRINGS
+	}*/
+}
+void ciudad_mas_calida(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
+	float max_temp_m=0;
+	char ciudad_mas_calida_m[50];
+	float max_temp_c=0;
+	char ciudad_mas_calida_c[50];
+	float max_temp_sf=0;
+	char ciudad_mas_calida_sf[50];
+	
+	//ciudad mas calida de mendoza
+	while(temp_m!=NULL){
+		if(max_temp_m==0){
+		max_temp_m=temp_m->c.m.temp;
+		strcpy(ciudad_mas_calida_m,temp_m->c.city_name);
+		}
+		else{
+			if(max_temp_m<temp_m->c.m.temp){
+				max_temp_m=temp_m->c.m.temp;
+				strcpy(ciudad_mas_calida_m,temp_m->c.city_name);
+			}
+		}
+		temp_m=temp_m->next;
 	}
-}*///HAGANLO XD A MI NO ME SALE
+	printf("La maxima temperatura de mendoza es %0.2f grados, correspondiente a la ciudad de %s\n",max_temp_m,ciudad_mas_calida_m);
+	
+	//ciudad mas calida de cordoba
+	while(temp_c!=NULL){
+		if(max_temp_c==0){
+			max_temp_c=temp_c->c.m.temp;
+			strcpy(ciudad_mas_calida_c,temp_c->c.city_name);
+		}
+		else{
+			if(max_temp_c<temp_c->c.m.temp){
+				max_temp_c=temp_c->c.m.temp;
+				strcpy(ciudad_mas_calida_c,temp_c->c.city_name);
+			}
+		}
+		temp_c=temp_c->next;
+	}
+	printf("La maxima temperatura de Cordoba es %0.2f grados, correspondiente a la ciudad de %s\n",max_temp_c,ciudad_mas_calida_c);
+	
+	//ciudad mas calida de Santa Fe
+	while(temp_sf!=NULL){
+		if(max_temp_sf==0){
+			max_temp_sf=temp_sf->c.m.temp;
+			strcpy(ciudad_mas_calida_sf,temp_sf->c.city_name);
+		}
+		else{
+			if(max_temp_sf<temp_sf->c.m.temp){
+				max_temp_sf=temp_sf->c.m.temp;
+				strcpy(ciudad_mas_calida_sf,temp_sf->c.city_name);
+			}
+		}
+		temp_sf=temp_sf->next;
+	}
+	printf("La maxima temperatura de Santa Fe es %0.2f grados, correspondiente a la ciudad de %s\n",max_temp_sf,ciudad_mas_calida_sf);
+}
+	void ciudad_mas_fria(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
+		float min_temp_m=0;
+		char ciudad_mas_fria_m[50];
+		float min_temp_c=0;
+		char ciudad_mas_fria_c[50];
+		float min_temp_sf=0;
+		char ciudad_mas_fria_sf[50];
+		
+		//ciudad mas fria de mendoza
+		while(temp_m!=NULL){
+			if(min_temp_m==0){
+				min_temp_m=temp_m->c.m.temp;
+				strcpy(ciudad_mas_fria_m,temp_m->c.city_name);
+			}
+			else{
+				if(min_temp_m>temp_m->c.m.temp){
+					min_temp_m=temp_m->c.m.temp;
+					strcpy(ciudad_mas_fria_m,temp_m->c.city_name);
+				}
+			}
+			temp_m=temp_m->next;
+		}
+		printf("La minima temperatura de mendoza es %0.2f grados, correspondiente a la ciudad de %s\n",min_temp_m,ciudad_mas_fria_m);
+		
+		//ciudad mas fria de cordoba
+		while(temp_c!=NULL){
+			if(min_temp_c==0){
+				min_temp_c=temp_c->c.m.temp;
+				strcpy(ciudad_mas_fria_c,temp_c->c.city_name);
+			}
+			else{
+				if(min_temp_c>temp_c->c.m.temp){
+					min_temp_c=temp_c->c.m.temp;
+					strcpy(ciudad_mas_fria_c,temp_c->c.city_name);
+				}
+			}
+			temp_c=temp_c->next;
+		}
+		printf("La minima temperatura de Cordoba es %0.2f grados, correspondiente a la ciudad de %s\n",min_temp_c,ciudad_mas_fria_c);
+		
+		//ciudad mas fria de Santa Fe
+		while(temp_sf!=NULL){
+			if(min_temp_sf==0){
+				min_temp_sf=temp_sf->c.m.temp;
+				strcpy(ciudad_mas_fria_sf,temp_sf->c.city_name);
+			}
+			else{
+				if(min_temp_sf>temp_sf->c.m.temp){
+					min_temp_sf=temp_sf->c.m.temp;
+					strcpy(ciudad_mas_fria_sf,temp_sf->c.city_name);
+				}
+			}
+			temp_sf=temp_sf->next;
+		}
+		printf("La minima temperatura de Santa Fe es %0.2f grados, correspondiente a la ciudad de %s\n",min_temp_sf,ciudad_mas_fria_sf);
+	}
+		
+	
+		
+	void dia_mas_frio(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
+			int hora_m=0,mes_m=0,dia_m=0,hora_c=0,mes_c=0,dia_c=0,hora_sf=0,mes_sf=0,dia_sf=0;
+			float min_temp_m=0;
+			char ciudad_mas_fria_m[50];
+			float min_temp_c=0;
+			char ciudad_mas_fria_c[50];
+			float min_temp_sf=0;
+			char ciudad_mas_fria_sf[50];
+			
+			//dia mas frio de mendoza
+			while(temp_m!=NULL){
+				if(min_temp_m==0){
+					min_temp_m=temp_m->c.m.temp;
+					hora_m=temp_m->c.m.time.hh;
+					dia_m=temp_m->c.m.time.day;
+					mes_m=temp_m->c.m.time.month;
+					strcpy(ciudad_mas_fria_m,temp_m->c.city_name);
+				}
+				else{
+					if(min_temp_m>temp_m->c.m.temp){
+						min_temp_m=temp_m->c.m.temp;
+						hora_m=temp_m->c.m.time.hh;
+						dia_m=temp_m->c.m.time.day;
+						mes_m=temp_m->c.m.time.month;
+						strcpy(ciudad_mas_fria_m,temp_m->c.city_name);
+					}
+				}
+				temp_m=temp_m->next;
+			}
+			printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_m,mes_m,hora_m,ciudad_mas_fria_m,min_temp_m);
+			
+			//dia mas frio de cordoba
+			while(temp_c!=NULL){
+				if(min_temp_c==0){
+					min_temp_c=temp_c->c.m.temp;
+					hora_c=temp_c->c.m.time.hh;
+					dia_c=temp_c->c.m.time.day;
+					mes_c=temp_c->c.m.time.month;
+					strcpy(ciudad_mas_fria_c,temp_c->c.city_name);
+				}
+				else{
+					if(min_temp_c>temp_c->c.m.temp){
+						min_temp_c=temp_c->c.m.temp;
+						hora_c=temp_c->c.m.time.hh;
+						dia_c=temp_c->c.m.time.day;
+						mes_c=temp_c->c.m.time.month;
+						strcpy(ciudad_mas_fria_c,temp_c->c.city_name);
+					}
+				}
+				temp_c=temp_c->next;
+			}
+			printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_c,mes_c,hora_c,ciudad_mas_fria_c,min_temp_c);
+			
+			
+			
+			//dia mas fria de Santa Fe
+			while(temp_sf!=NULL){
+				if(min_temp_sf==0){
+					min_temp_sf=temp_sf->c.m.temp;
+					hora_sf=temp_sf->c.m.time.hh;
+					dia_sf=temp_sf->c.m.time.day;
+					mes_sf=temp_sf->c.m.time.month;
+					strcpy(ciudad_mas_fria_sf,temp_sf->c.city_name);
+				}
+				else{
+					if(min_temp_sf>temp_sf->c.m.temp){
+						min_temp_sf=temp_sf->c.m.temp;
+						hora_sf=temp_sf->c.m.time.hh;
+						dia_sf=temp_sf->c.m.time.day;
+						mes_sf=temp_sf->c.m.time.month;
+						strcpy(ciudad_mas_fria_sf,temp_sf->c.city_name);
+					}
+				}
+				temp_sf=temp_sf->next;
+			}
+			printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_sf,mes_sf,hora_sf,ciudad_mas_fria_sf,min_temp_sf);
+			
+		}
+			
+void provincia_para_pimientos(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
+	int acum= 0;
+	double suma= 0;
+	float prom_m=0,prom_c=0,prom_sf=0,proxim_m=0,proxim_c=0,proxim_sf=0;
+	printf("--------------------------------------------\n");
+	//OPCION 1 DEL MENU (MENDOZA)
+	while(temp_m!=NULL)
+	{
+		acum++;	
+		suma+= temp_m->c.m.temp;
+		temp_m=temp_m->next;
+	}
+	prom_m=(float)suma/acum;
+
+	acum= 0;
+	suma= 0;
+	while(temp_sf!=NULL)
+	{
+		acum++;	
+		suma+= temp_sf->c.m.temp;
+		temp_sf=temp_sf->next;
+	}
+	prom_sf=(float)suma/acum;
+	
+	acum= 0;
+	suma= 0;
+	while(temp_c!=NULL)
+	{
+		acum++;	
+		suma+= temp_c->c.m.temp;
+		temp_c=temp_c->next;
+	}
+	prom_c=(float)suma/acum;
+	
+	//comparacion de temperautrs
+	proxim_sf=fabs(prom_sf-25);
+	proxim_m=fabs(prom_m-25);
+	proxim_c=fabs(prom_c-25);
+	//comparamos valores absoluto debido a que expresa proximidad
+	
+	if(proxim_c<proxim_m &&proxim_c<proxim_sf){
+		printf("La provincia mas adecuada para el cultivo de pimientos es Cordoba debido a su temperatura media de %0.2f grados\n",prom_c);
+	}
+	else{
+		if(proxim_m<proxim_c&&proxim_m<proxim_sf){
+			printf("La provincia mas adecuada para el cultivo de pimientos es Mendoza debido a su temperatura media de %0.2f\n",prom_m);
+		}
+		else{
+			printf("La provincia mas adecuada para el cultivo de pimientos es Santa Fe debido a su temperatura media de %0.2f\n",prom_sf);
+		}
+	}
+	
+}
