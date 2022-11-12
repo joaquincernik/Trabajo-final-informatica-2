@@ -319,25 +319,61 @@ void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct me
 		printf("--------------------------------------------\n");
 	}
 		void temp_prom_city(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoza** temp_m){
-			/*int acum= 0, ii= 0,numeroId=0;
+			int acum= 0, ii= 0;
 			double suma= 0;
-			struct mendoza* temp_back_m=NULL;
-			temp_back_m=*head_m;
+			char aux[50];
+			ii=(*temp_m)->c.cityld;
+			//NO MUESTRA LA ULTIMA CIUDAD EN NINGUNA DE LAS TRES PROVINCIAS
 			while(*temp_m!=NULL){
-			//printf("%d",(*temp_m)->c.cityld);
-			numeroId=(*temp_m)->c.cityld;
-			if((*temp_m)->c.cityld==numeroId){
-			//printf("%d",(*temp_m)->c.m.temp);
-			acum++;	
-			suma+= (*temp_c)->c.m.temp;
-			*temp_c=(*temp_c)->next;
-		}
-			else{
-			
-		}
-			*temp_m=(*temp_m)->next;
-			HAY QUE HACERLO CON COMPARE STRINGS
-		}*/
+				if(ii==((*temp_m)->c.cityld)){
+					acum++;	
+					suma+= (*temp_m)->c.m.temp;
+					strcpy(aux, ((*temp_m)->c.city_name));
+					*temp_m=(*temp_m)->next;
+				}
+				else{
+					printf("%s\t%f\n", aux, (float)suma/acum);
+					printf("%d\n", ii); //PARA VER LOS VALORES QUE TOMA ii
+					ii=(*temp_m)->c.cityld; //EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
+					suma=0;
+					acum=0;
+				}
+			}
+			acum= 0;
+			suma= 0;
+			ii=(*temp_c)->c.cityld;
+			while(*temp_c!=NULL){
+				if(ii==((*temp_c)->c.cityld)){
+					acum++;	
+					suma+= (*temp_c)->c.m.temp;
+					*temp_c=(*temp_c)->next;
+					
+				}
+				else{
+					printf("%s\t%f\n", (*temp_c)->c.city_name, (float)suma/acum);
+					ii=(*temp_c)->c.cityld;
+					suma=0;
+					acum=0;
+				}
+			}
+			acum= 0;
+			suma= 0;
+			ii=(*temp_sf)->c.cityld;
+			while(*temp_sf!=NULL){
+				if(ii==((*temp_sf)->c.cityld)){
+					acum++;	
+					suma+= (*temp_sf)->c.m.temp;
+					*temp_sf=(*temp_sf)->next;
+					
+				}
+				else{
+					printf("%s\t%f\n", (*temp_sf)->c.city_name, (float)suma/acum);
+					ii=(*temp_sf)->c.cityld;
+					suma=0;
+					acum=0;
+				}
+			}
+			printf("\n");
 		}
 		void ciudad_mas_calida(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
 			float max_temp_m=0;
