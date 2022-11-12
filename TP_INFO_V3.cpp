@@ -52,7 +52,7 @@ struct mendoza
 int menu();
 void cant_muestras(struct cordoba**, struct santa_fe**, struct mendoza**);
 void temp_prom(struct cordoba**, struct santa_fe**, struct mendoza**);
-void temp_prom_city(struct cordoba**, struct santa_fe**, struct mendoza**);
+void temp_prom_city(struct cordoba*, struct santa_fe*, struct mendoza*);
 void ciudad_mas_calida(struct cordoba*,struct santa_fe*,struct mendoza*);
 void ciudad_mas_fria(struct cordoba*,struct santa_fe*,struct mendoza*);
 void dia_mas_frio(struct cordoba*,struct santa_fe*,struct mendoza*);
@@ -212,7 +212,7 @@ int main(int argc, char *argv[]) {
 			temp_prom(&temp_c,&temp_sf,&temp_m);
 			break;
 		case 3:
-			temp_prom_city(&temp_c,&temp_sf,&temp_m);
+			temp_prom_city(temp_c,temp_sf,temp_m);
 			break;
 		case 4:
 			ciudad_mas_calida(temp_c,temp_sf,temp_m);
@@ -318,61 +318,72 @@ void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct me
 		printf("Temperatura promedio de Cordoba: %f\n", ((float)suma/acum)); 
 		printf("--------------------------------------------\n");
 	}
-		void temp_prom_city(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoza** temp_m){
+		void temp_prom_city(struct cordoba* temp_c, struct santa_fe* temp_sf, struct mendoza* temp_m){
 			int acum= 0, ii= 0;
 			double suma= 0;
 			char aux[50];
-			ii=(*temp_m)->c.cityld;
+			
 			//NO MUESTRA LA ULTIMA CIUDAD EN NINGUNA DE LAS TRES PROVINCIAS
-			while(*temp_m!=NULL){
-				if(ii==((*temp_m)->c.cityld)){
+			ii=(temp_m)->c.cityld;
+			printf("----MENDOZA-----\n");
+			while(temp_m!=NULL){
+				if(ii==((temp_m)->c.cityld)){
 					acum++;	
-					suma+= (*temp_m)->c.m.temp;
-					strcpy(aux, ((*temp_m)->c.city_name));
-					*temp_m=(*temp_m)->next;
+					suma+= (temp_m)->c.m.temp;
+					strcpy(aux, ((temp_m)->c.city_name));
+					temp_m=(temp_m)->next;
 				}
 				else{
 					printf("%s\t%f\n", aux, (float)suma/acum);
 					printf("%d\n", ii); //PARA VER LOS VALORES QUE TOMA ii
-					ii=(*temp_m)->c.cityld; //EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
+					ii=(temp_m)->c.cityld; //EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
 					suma=0;
 					acum=0;
+					
 				}
 			}
+			printf("%s\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
+			printf("%d\n", ii);
 			acum= 0;
 			suma= 0;
-			ii=(*temp_c)->c.cityld;
-			while(*temp_c!=NULL){
-				if(ii==((*temp_c)->c.cityld)){
+			ii=(temp_c)->c.cityld;
+			printf("----CORDOBA-----\n");
+			while(temp_c!=NULL){
+				if(ii==((temp_c)->c.cityld)){
 					acum++;	
-					suma+= (*temp_c)->c.m.temp;
-					*temp_c=(*temp_c)->next;
+					suma+= (temp_c)->c.m.temp;
+					temp_c=(temp_c)->next;
 					
 				}
 				else{
-					printf("%s\t%f\n", (*temp_c)->c.city_name, (float)suma/acum);
-					ii=(*temp_c)->c.cityld;
+					printf("%s\t%f\n", (temp_c)->c.city_name, (float)suma/acum);
+					ii=(temp_c)->c.cityld;
 					suma=0;
 					acum=0;
 				}
 			}
+			printf("%s\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
+			printf("%d\n", ii);
 			acum= 0;
 			suma= 0;
-			ii=(*temp_sf)->c.cityld;
-			while(*temp_sf!=NULL){
-				if(ii==((*temp_sf)->c.cityld)){
+			ii=(temp_sf)->c.cityld;
+			printf("----SANTA FE-----\n");
+			while(temp_sf!=NULL){
+				if(ii==((temp_sf)->c.cityld)){
 					acum++;	
-					suma+= (*temp_sf)->c.m.temp;
-					*temp_sf=(*temp_sf)->next;
+					suma+= (temp_sf)->c.m.temp;
+					temp_sf=(temp_sf)->next;
 					
 				}
 				else{
-					printf("%s\t%f\n", (*temp_sf)->c.city_name, (float)suma/acum);
-					ii=(*temp_sf)->c.cityld;
+					printf("%s\t%f\n", (temp_sf)->c.city_name, (float)suma/acum);
+					ii=(temp_sf)->c.cityld;
 					suma=0;
 					acum=0;
 				}
 			}
+			printf("%s\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
+			printf("%d\n", ii);
 			printf("\n");
 		}
 		void ciudad_mas_calida(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
