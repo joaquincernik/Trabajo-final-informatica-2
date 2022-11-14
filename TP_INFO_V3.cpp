@@ -4,8 +4,9 @@
 #include <string.h>
 #include <string>
 #include <math.h>
+#include "archivo.h"
 using namespace std;
-
+/*
 struct timestamp
 {
 	int day;
@@ -56,7 +57,7 @@ void temp_prom_city(struct cordoba*, struct santa_fe*, struct mendoza*);
 void ciudad_mas_calida(struct cordoba*,struct santa_fe*,struct mendoza*);
 void ciudad_mas_fria(struct cordoba*,struct santa_fe*,struct mendoza*);
 void dia_mas_frio(struct cordoba*,struct santa_fe*,struct mendoza*);
-void provincia_para_pimientos(struct cordoba*,struct santa_fe*,struct mendoza*);
+void provincia_para_pimientos(struct cordoba*,struct santa_fe*,struct mendoza*);*/
 int main(int argc, char *argv[]) {
 	
 	struct cordoba* head_c=NULL;
@@ -73,8 +74,10 @@ int main(int argc, char *argv[]) {
 	
 	FILE *fp=NULL; /*Puntero Abrir Archivo*/
 	
-	fp=fopen("./data_set.txt", "r");  /*Funcion abrir data_set.txt*/
-	
+//	fp=fopen("./data_set.txt", "r");  /*Funcion abrir data_set.txt*/
+	clase c;
+	c.setFilePointer();
+	fp= c.getFilePointer();
 	if(fp==NULL)											
 	{
 		printf("Es imposible abrir el archivo. \n\n");  /* Check Funcion Abrir */
@@ -246,8 +249,8 @@ int main(int argc, char *argv[]) {
 	
 	return 0;
 }
-int menu()
-{
+/*
+int menu(){
 	int opcion=0;
 	printf ("1: Total de las muestras almacenadas en las listas pertenecientes a cada provincia.\n");
 	printf ("2: Temperatura promedio de cada provincia.\n3: Temperatura promedio de cada ciudad.\n");
@@ -290,7 +293,6 @@ void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct me
 		double suma= 0;
 		
 		printf("--------------------------------------------\n");
-		//OPCION 1 DEL MENU (MENDOZA)
 		while(*temp_m!=NULL)
 		{
 			acum++;	
@@ -323,9 +325,8 @@ void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct me
 			double suma= 0;
 			char aux[50];
 			
-			//NO MUESTRA LA ULTIMA CIUDAD EN NINGUNA DE LAS TRES PROVINCIAS
 			ii=(temp_m)->c.cityld;
-			printf("----MENDOZA-----\n");
+			printf("-----MENDOZA-----\n");
 			while(temp_m!=NULL){
 				if(ii==((temp_m)->c.cityld)){
 					acum++;	
@@ -334,56 +335,54 @@ void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct me
 					temp_m=(temp_m)->next;
 				}
 				else{
-					printf("%s\t%f\n", aux, (float)suma/acum);
-					printf("%d\n", ii); //PARA VER LOS VALORES QUE TOMA ii
-					ii=(temp_m)->c.cityld; //EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
+					printf("%s:\t%f\n", aux, (float)suma/acum);
+					ii=(temp_m)->c.cityld;
 					suma=0;
 					acum=0;
 					
 				}
 			}
-			printf("%s\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
-			printf("%d\n", ii);
+			printf("%s:\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
 			acum= 0;
 			suma= 0;
 			ii=(temp_c)->c.cityld;
-			printf("----CORDOBA-----\n");
+			printf("-----CORDOBA-----\n");
 			while(temp_c!=NULL){
 				if(ii==((temp_c)->c.cityld)){
 					acum++;	
 					suma+= (temp_c)->c.m.temp;
+					strcpy(aux, ((temp_c)->c.city_name));
 					temp_c=(temp_c)->next;
 					
 				}
 				else{
-					printf("%s\t%f\n", (temp_c)->c.city_name, (float)suma/acum);
+					printf("%s:\t%f\n", aux, (float)suma/acum);
 					ii=(temp_c)->c.cityld;
 					suma=0;
 					acum=0;
 				}
 			}
-			printf("%s\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
-			printf("%d\n", ii);
+			printf("%s:\t%f\n", aux, (float)suma/acum);
 			acum= 0;
 			suma= 0;
 			ii=(temp_sf)->c.cityld;
-			printf("----SANTA FE-----\n");
+			printf("-----SANTA FE-----\n");
 			while(temp_sf!=NULL){
 				if(ii==((temp_sf)->c.cityld)){
 					acum++;	
 					suma+= (temp_sf)->c.m.temp;
+					strcpy(aux, ((temp_sf)->c.city_name));
 					temp_sf=(temp_sf)->next;
 					
 				}
 				else{
-					printf("%s\t%f\n", (temp_sf)->c.city_name, (float)suma/acum);
+					printf("%s:\t%f\n", aux, (float)suma/acum);
 					ii=(temp_sf)->c.cityld;
 					suma=0;
 					acum=0;
 				}
 			}
-			printf("%s\t%f\n", aux, (float)suma/acum);//DEBIDO A QUR AL SER LA ULTIMA MUESTRA NO ENTRA AL ELSE LO IMPRIMIMOS DE LA SIGUIENTE MANERA
-			printf("%d\n", ii);
+			printf("%s:\t%f\n", aux, (float)suma/acum);
 			printf("\n");
 		}
 		void ciudad_mas_calida(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
@@ -633,4 +632,4 @@ void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct me
 						}
 						
 					}
-						
+						*/
