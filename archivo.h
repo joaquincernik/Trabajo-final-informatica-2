@@ -64,6 +64,7 @@ void temp_prom_city(struct cordoba*, struct santa_fe*, struct mendoza*);
 void ciudad_mas_calida(struct cordoba*,struct santa_fe*,struct mendoza*);
 void ciudad_mas_fria(struct cordoba*,struct santa_fe*,struct mendoza*);
 void dia_mas_frio(struct cordoba*,struct santa_fe*,struct mendoza*);
+void dia_mas_calido_city(struct cordoba*,struct santa_fe*,struct mendoza*);
 void provincia_para_pimientos(struct cordoba*,struct santa_fe*,struct mendoza*);
 
 clase::clase(){
@@ -394,6 +395,76 @@ void dia_mas_frio(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza
 		temp_sf=temp_sf->next;
 	}
 	printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_sf,mes_sf,hora_sf,ciudad_mas_fria_sf,min_temp_sf);
+}
+void dia_mas_calido_city(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m)
+{
+	float max_temp=0;
+	char dia_mas_calido_city[50];
+	int ii=0,dia=0,hora=0,minuto=0;
+	//DIA MAS CALIDO EN CADA CIUDAD DE MENDOZA
+	printf("----MENDOZA-----\n");
+	ii=(temp_m)->c.cityld;
+	max_temp=temp_m->c.m.temp;
+	while(temp_m!=NULL){	
+		if(ii==(temp_m)->c.cityld){
+			if(max_temp<(temp_m)->c.m.temp){
+				max_temp=(temp_m)->c.m.temp;
+				strcpy(dia_mas_calido_city,temp_m->c.city_name);
+				dia=temp_m->c.m.time.day;
+				hora=temp_m->c.m.time.hh;
+				minuto=temp_m->c.m.time.mm;
+			}
+			temp_m=(temp_m)->next;
+		}
+		else{
+			printf("El dia mas calido en %s con %0.2f grados, el dia: %d a las %d:%d\n",dia_mas_calido_city, max_temp, dia, hora, minuto);
+			ii=(temp_m)->c.cityld;//EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
+			max_temp=(temp_m)->c.m.temp;
+		}
+	}
+	printf("El dia mas calido en %s con %0.2f grados, el dia: %d a las %d:%d\n",dia_mas_calido_city, max_temp, dia, hora, minuto);
+	printf("----SANTA FE-----\n");
+	ii=(temp_sf)->c.cityld;
+	max_temp=temp_sf->c.m.temp;
+	while(temp_sf!=NULL){	
+		if(ii==(temp_sf)->c.cityld){
+			if(max_temp<(temp_sf)->c.m.temp){
+				max_temp=(temp_sf)->c.m.temp;
+				strcpy(dia_mas_calido_city,temp_sf->c.city_name);
+				dia=temp_sf->c.m.time.day;
+				hora=temp_sf->c.m.time.hh;
+				minuto=temp_sf->c.m.time.mm;
+			}
+			temp_sf=(temp_sf)->next;
+		}
+		else{
+			printf("El dia mas calido en %s con %0.2f grados, el dia: %d a las %d:%d\n",dia_mas_calido_city, max_temp, dia, hora, minuto);
+			ii=(temp_sf)->c.cityld;//EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
+			max_temp=(temp_sf)->c.m.temp;
+		}
+	}
+	printf("El dia mas calido en %s con %0.2f grados, el dia: %d a las %d:%d\n",dia_mas_calido_city, max_temp, dia, hora, minuto);
+	printf("----CORDOBA-----\n");
+	ii=(temp_c)->c.cityld;
+	max_temp=temp_c->c.m.temp;
+	while(temp_c!=NULL){	
+		if(ii==(temp_c)->c.cityld){
+			if(max_temp<(temp_c)->c.m.temp){
+				max_temp=(temp_c)->c.m.temp;
+				strcpy(dia_mas_calido_city,temp_c->c.city_name);
+				dia=temp_c->c.m.time.day;
+				hora=temp_c->c.m.time.hh;
+				minuto=temp_c->c.m.time.mm;
+			}
+			temp_c=(temp_c)->next;
+		}
+		else{
+			printf("El dia mas calido en %s con %0.2f grados, el dia: %d a las %d:%d\n",dia_mas_calido_city, max_temp, dia, hora, minuto);
+			ii=(temp_c)->c.cityld;//EN LA ULTIMA VUELTA DE WHILE ENTRA AL IF PERO AL ELSE NO, POR ESO NO LA MUESTRA
+			max_temp=(temp_c)->c.m.temp;
+		}
+	}
+	printf("El dia mas calido en %s con %0.2f grados, el dia: %d a las %d:%d\n",dia_mas_calido_city, max_temp, dia, hora, minuto);
 }
 void provincia_para_pimientos(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m){
 	int acum= 0;
