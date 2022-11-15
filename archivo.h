@@ -58,8 +58,8 @@ struct mendoza
 	struct mendoza *next;
 };
 int menu();
-void cant_muestras(struct cordoba**, struct santa_fe**, struct mendoza**);
-void temp_prom(struct cordoba**, struct santa_fe**, struct mendoza**);
+void cant_muestras(struct cordoba*, struct santa_fe*, struct mendoza*);
+void temp_prom(struct cordoba*, struct santa_fe*, struct mendoza*);
 void temp_prom_city(struct cordoba*, struct santa_fe*, struct mendoza*);
 void ciudad_mas_calida(struct cordoba*,struct santa_fe*,struct mendoza*);
 void ciudad_mas_fria(struct cordoba*,struct santa_fe*,struct mendoza*);
@@ -85,62 +85,62 @@ int menu(){
 	scanf("%d",&opcion);
 	return (opcion);
 }
-void cant_muestras(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoza** temp_m){
+void cant_muestras(struct cordoba* temp_c, struct santa_fe* temp_sf, struct mendoza* temp_m){
 	int acum= 0;
 	printf("--------------------------------------------\n");
 	//OPCION 1 DEL MENU (MENDOZA)
-	while(*temp_m!=NULL)
+	while(temp_m!=NULL)
 	{
 		acum++;						
-		*temp_m=(*temp_m)->next;
+		temp_m=(temp_m)->next;
 	}
 	printf("Hay %d muestras de Mendoza\n", acum*2); 
 	acum= 0;
 	//OPCION 1 DEL MENU (SANTA FE)
-	while(*temp_sf!=NULL)
+	while(temp_sf!=NULL)
 	{
 		acum++;						
-		*temp_sf=(*temp_sf)->next;
+		temp_sf=(temp_sf)->next;
 	}
 	printf("Hay %d muestras de Santa Fe\n", acum*2); 
 	acum= 0;
 	//OPCION 1 DEL MENU (CORDOBA)
-	while(*temp_c!=NULL)
+	while(temp_c!=NULL)
 	{
 		acum++;						
-		*temp_c=(*temp_c)->next;
+		temp_c=(temp_c)->next;
 	}
 	printf("Hay %d muestras de Cordoba\n", acum*2); 
 	printf("--------------------------------------------\n");
 }
-void temp_prom(struct cordoba** temp_c, struct santa_fe** temp_sf, struct mendoza** temp_m){		
+void temp_prom(struct cordoba* temp_c, struct santa_fe* temp_sf, struct mendoza* temp_m){		
 	int acum= 0;
 	double suma= 0;
 	
 	printf("--------------------------------------------\n");
-	while(*temp_m!=NULL)
+	while(temp_m!=NULL)
 	{
 		acum++;	
-		suma+= (*temp_m)->c.m.temp;
-		*temp_m=(*temp_m)->next;
+		suma+= (temp_m)->c.m.temp;
+		temp_m=(temp_m)->next;
 	}
 	printf("Temperatura promedio de Mendoza: %f\n", ((float)suma/acum)); 
 	acum= 0;
 	suma= 0;
-	while(*temp_sf!=NULL)
+	while(temp_sf!=NULL)
 	{
 		acum++;	
-		suma+= (*temp_sf)->c.m.temp;
-		*temp_sf=(*temp_sf)->next;
+		suma+= (temp_sf)->c.m.temp;
+		temp_sf=(temp_sf)->next;
 	}
 	printf("Temperatura promedio de Santa Fe: %f\n", ((float)suma/acum)); 
 	acum= 0;
 	suma= 0;
-	while(*temp_c!=NULL)
+	while(temp_c!=NULL)
 	{
 		acum++;	
-		suma+= (*temp_c)->c.m.temp;
-		*temp_c=(*temp_c)->next;
+		suma+= (temp_c)->c.m.temp;
+		temp_c=(temp_c)->next;
 	}
 	printf("Temperatura promedio de Cordoba: %f\n", ((float)suma/acum)); 
 	printf("--------------------------------------------\n");
