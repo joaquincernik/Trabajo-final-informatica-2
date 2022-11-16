@@ -329,7 +329,7 @@ void dia_mas_frio(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza
 	char ciudad_mas_fria_c[50];
 	float min_temp_sf=0;
 	char ciudad_mas_fria_sf[50];
-
+	printf("-----------DIA MAS FRIO-----------\n");
 	//dia mas frio de mendoza
 	while(temp_m!=NULL){
 		if(min_temp_m==0){
@@ -350,7 +350,7 @@ void dia_mas_frio(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza
 		}
 		temp_m=temp_m->next;
 	}
-	printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_m,mes_m,hora_m,ciudad_mas_fria_m,min_temp_m);
+	printf("El %d/%d en Mendoza, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_m,mes_m,hora_m,ciudad_mas_fria_m,min_temp_m);
 
 	//dia mas frio de cordoba
 	while(temp_c!=NULL){
@@ -372,7 +372,7 @@ void dia_mas_frio(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza
 		}
 		temp_c=temp_c->next;
 	}
-	printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_c,mes_c,hora_c,ciudad_mas_fria_c,min_temp_c);
+	printf("El %d/%d en Cordoba, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_c,mes_c,hora_c,ciudad_mas_fria_c,min_temp_c);
 
 	//dia mas fria de Santa Fe
 	while(temp_sf!=NULL){
@@ -394,7 +394,7 @@ void dia_mas_frio(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza
 		}
 		temp_sf=temp_sf->next;
 	}
-	printf("El dia en el cual se alcanzo la temperatura mas fria en la provincia de Mendoza fue el %d/%d, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_sf,mes_sf,hora_sf,ciudad_mas_fria_sf,min_temp_sf);
+	printf("El %d/%d en Santa Fe, al rededor de las %d hs en la ciudad de %s, alcanzando los %0.2f grados\n",dia_sf,mes_sf,hora_sf,ciudad_mas_fria_sf,min_temp_sf);
 }
 void dia_mas_calido_city(struct cordoba* temp_c,struct santa_fe* temp_sf,struct mendoza* temp_m)
 {
