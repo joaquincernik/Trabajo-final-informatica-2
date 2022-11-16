@@ -20,9 +20,7 @@ int main(int argc, char *argv[]) {
 	struct mendoza* temp_m=NULL;			//Punteros Mendoza
 	struct mendoza* new_node_m=NULL;
 	
-	FILE *fp=NULL; /*Puntero Abrir Archivo*/
-	
-//	fp=fopen("./data_set.txt", "r");  /*Funcion abrir data_set.txt*/
+	FILE *fp=NULL; 
 	clase c;
 	c.setFilePointer();
 	fp= c.getFilePointer();
@@ -157,10 +155,10 @@ int main(int argc, char *argv[]) {
 			printf ("Adios ¡Gracias!");
 			break;
 		case 1:
-			cant_muestras(&temp_c,&temp_sf,&temp_m);
+			cant_muestras(temp_c,temp_sf,temp_m);
 			break;
 		case 2:
-			temp_prom(&temp_c,&temp_sf,&temp_m);
+			temp_prom(temp_c,temp_sf,temp_m);
 			break;
 		case 3:
 			temp_prom_city(temp_c,temp_sf,temp_m);
